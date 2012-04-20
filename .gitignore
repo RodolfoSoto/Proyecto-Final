@@ -1,5 +1,5 @@
 *.py[co]
-
+*.pyc
 # Packages
 *.egg
 *.egg-info
@@ -25,3 +25,13 @@ pip-log.txt
 
 #Mr Developer
 .mr.developer.cfg
+/bin
+db.sqlite3
+/include
+/build
+/lib
+/lib64
+/src
+/share
+/man
+.Python
