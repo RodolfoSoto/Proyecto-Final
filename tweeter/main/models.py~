@@ -1,0 +1,6 @@
+from django.db import models
+
+class User_Profile(models.Model):
+    
+
+# Create your models here.
