@@ -1,0 +1,13 @@
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+	<a href = "{% url edit %}">Edit Profile</a>
+	<form method="POST">
+		{% csrf_token %}
+		{{ form.as_p }}
+		<input type="submit" value="Share">
+	</form>
+</body>
+</html>

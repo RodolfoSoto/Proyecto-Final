@@ -1,5 +1,6 @@
-from blog.models import Article, Comment
+from main.models import User_Profile, Tweeet
 from django.contrib import admin
 
-admin.site.register(Article)
-admin.site.register(Comment)
+admin.site.register(User_Profile)
+admin.site.register(Tweeet)
+

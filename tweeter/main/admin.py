@@ -1,5 +1,6 @@
-from main.models import User_Profile
+from main.models import UserProfile, Tweeet
 from django.contrib import admin
 
-admin.site.register(User_Profile)
+admin.site.register(UserProfile)
+admin.site.register(Tweeet)
 

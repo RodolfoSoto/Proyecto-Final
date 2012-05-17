@@ -1,6 +1,16 @@
 from django.db import models
+from django.contrib.auth.models import User
 
-class User_Profile(models.Model):
+class UserProfile(models.Model):
+    birthday = models.DateTimeField(null=True, blank=True )    
+    location = models.CharField(max_length=70, null=True, blank=True)
+    bio = models.CharField(max_length=250, null=True, blank=True)
+    author = models.OneToOneField(User , null=True, blank=True)
+    followers = models.ManyToManyField('UserProfile', null=True, blank=True)
+
+class Tweeet(models.Model):
+    created_at = models.DateTimeField(auto_now_add=True)   	
+    status = models.CharField(max_length=120)
+    author = models.ForeignKey('UserProfile')
     
-
 # Create your models here.

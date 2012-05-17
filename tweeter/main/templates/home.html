@@ -1,0 +1,21 @@
+<html>
+<head>
+	<title>Home</title>
+</head>
+<body>
+	<div>
+		<h1>Welcome to Tweeeter - Home</h1>
+		<a href = "{% url register %}">	Register</a>
+	<div>	
+	</div>
+	<div>
+		<form method="POST">
+			{% csrf_token %}
+			{{ form.as_p }}
+			<input type="submit" value="Log in">
+			
+		</form>
+	</div>
+</body>
+
+</html>
