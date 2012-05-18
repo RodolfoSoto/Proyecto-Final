@@ -2,15 +2,15 @@
 from django.shortcuts import render_to_response, redirect, get_object_or_404
 from django.template import RequestContext
 from django.contrib import auth
+from django.contrib.auth import logout
 from django.contrib.auth.models import UserManager
-from django.contrib.auth.forms import AuthenticationForm 
-from main.models import UserProfile
+from django.contrib.auth.forms import AuthenticationForm, PasswordResetForm 
+from main.models import UserProfile, Tweeet
 from main.forms import UserProfileForm, CreationForm, TweeetForm, EditForm
 
 
 def home(request):
 	form = AuthenticationForm()	
-	#if request.method == 'POST':
 	if request.method == 'POST':
 		form = AuthenticationForm(None, request.POST)
 		if form.is_valid():
@@ -20,7 +20,6 @@ def home(request):
 		'form' : form,
 	}, RequestContext(request))
 
-#pull, add, commit, push
 
 def Main(request, pk):    
 	pass
@@ -41,6 +40,8 @@ def register(request):
 
 def tweet(request):
 	form = TweeetForm()
+	users = UserProfile.objects.all()
+	puser = get_object_or_404(UserProfile, author=request.user)
 	if request.method == 'POST':
 		form= TweeetForm(request.POST)		
 		if form.is_valid():
@@ -51,7 +52,27 @@ def tweet(request):
 			return redirect('tweet')
 	return render_to_response('tweet.html', {
 		'form': form,
+		'users': users,
+		'puser': puser,
 		}, RequestContext(request))
+
+
+def delete_tweet(request,pk):
+	Tweeet.objects.filter(pk=pk).delete()
+	return redirect('tweet')
+
+
+def edit_tweet(request, pk):
+	tweet = get_object_or_404(Tweeet, pk=pk)
+	form = TweeetForm(instance=tweet)
+	if request.method =='POST':
+		form = TweeetForm(request.POST, instance=tweet)
+		if form.is_valid():
+			form.save()
+		return redirect('tweet')
+	return render_to_response('edit_tweet.html',{
+		'form': form,
+	}, RequestContext(request))
 
 
 def edit(request):
@@ -68,23 +89,21 @@ def edit(request):
 	}, RequestContext(request))
 
 
+def follows(request,pk):
+	pass	
 
-#def edit_article(request, pk):
-#	article = get_object_or_404(Article, pk=pk)
-#	form = ArticleForm(instance=article)
-#	if request.method =='POST':
-#		form = ArticleForm(request.POST, instance=article)
-#		if form.is_valid():
-#			form.save()
-#		return redirect('home')
-#	return render_to_response('add_article.html',{
-#		'form': form,
-#	}, RequestContext(request))
 
-#def show_article(request, pk):
-#	article = get_object_or_404(Article, pk=pk)
-#	return render_to_response('show_article.html', {
-#		'article': article,
-#	})
-
+def logout_view(request):
+	logout(request)
+	return redirect('home')
 	
+	
+def password_reset(request):
+	form= PasswordResetForm()
+	if request.method == 'POST':
+		form=PasswordResetForm(request.POST)
+		if form.is_valid():
+			return redirect('home')
+	return render_to_response('password_reset_form.html',{
+		'form': form,
+	}, RequestContext(request))

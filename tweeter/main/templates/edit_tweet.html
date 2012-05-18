@@ -1,18 +1,16 @@
 <html>
 <head>
-	<title>Registration</title>
+	<title>Edit tweet</title>
 	<script type="text/javascript" src="{{ STATIC_URL }}jquery-1.7.1.min.js"></script>
     <script type="text/javascript" src="{{ STATIC_URL }}main.js"></script>
     <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}main.css">
 </head>
 <body>
-	<div>
 	<form method="POST">
 		{% csrf_token %}
 		{{ form.as_p }}
 		<input type="submit"/>
 	</form>
-	</div>
 </body>
 
 </html>

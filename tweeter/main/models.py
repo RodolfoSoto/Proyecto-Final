@@ -6,11 +6,11 @@ class UserProfile(models.Model):
     location = models.CharField(max_length=70, null=True, blank=True)
     bio = models.CharField(max_length=250, null=True, blank=True)
     author = models.OneToOneField(User , null=True, blank=True)
-    followers = models.ManyToManyField('UserProfile', null=True, blank=True)
+    followers = models.ManyToManyField('self', null=True, blank=True, related_name='followers')
 
 class Tweeet(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)   	
     status = models.CharField(max_length=120)
-    author = models.ForeignKey('UserProfile')
+    author = models.ForeignKey('UserProfile', related_name='tweets')
     
 # Create your models here.

@@ -1,21 +1,25 @@
 <html>
 <head>
 	<title>Home</title>
+	<script type="text/javascript" src="{{ STATIC_URL }}jquery-1.7.1.min.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}main.js"></script>
+    <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}main.css">
 </head>
-<body>
+<body align="center">
 	<div>
 		<h1>Welcome to Tweeeter - Home</h1>
 		<a href = "{% url register %}">	Register</a>
 	<div>	
 	</div>
-	<div>
+	<abc>
 		<form method="POST">
 			{% csrf_token %}
 			{{ form.as_p }}
 			<input type="submit" value="Log in">
 			
 		</form>
-	</div>
+	</abc>
+	<a href="{% url password_reset %}" > Forgot your password? </a>
 </body>
 
 </html>

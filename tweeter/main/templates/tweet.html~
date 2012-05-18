@@ -3,11 +3,29 @@
 	<title></title>
 </head>
 <body>
-	<a href = "{% url register %}">	Edit Profile</a>
+	<a href = "{% url edit %}">Edit Profile</a>
+	<br>
+	<br>
+	<h2> Users </h2>
+	{% for user in users %}
+	<div>
+		<h2>{{ user.author }} </h2>
+		<div>{{ user.bio }}</div>
+		<div> {{ user.location }}</div>
+		<div><a href = "{% url follows user.id %}">Follow/Stop Follow</a></div>		
+	{% endfor %}
 	<form method="POST">
 		{% csrf_token %}
 		{{ form.as_p }}
 		<input type="submit" value="Share">
 	</form>
+	<p>{% for tweet in puser.tweets.all %}
+		<div> {{ tweet.created_at }} </div>
+		<div> {{ tweet.status }}</div>
+		<div><a href = "{% url edit_tweet tweet.id %}">Edit</a> 
+		<a href = "{% url delete_tweet tweet.id %}">Delete</a>
+		</div>	
+		{% endfor %}
+	</p>
 </body>
 </html>

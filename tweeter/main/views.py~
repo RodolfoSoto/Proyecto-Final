@@ -4,7 +4,7 @@ from django.template import RequestContext
 from django.contrib import auth
 from django.contrib.auth.models import UserManager
 from django.contrib.auth.forms import AuthenticationForm 
-from main.models import UserProfile
+from main.models import UserProfile, Tweeet
 from main.forms import UserProfileForm, CreationForm, TweeetForm, EditForm
 
 
@@ -41,6 +41,8 @@ def register(request):
 
 def tweet(request):
 	form = TweeetForm()
+	users = UserProfile.objects.all()
+	puser = get_object_or_404(UserProfile, author=request.user)
 	if request.method == 'POST':
 		form= TweeetForm(request.POST)		
 		if form.is_valid():
@@ -51,7 +53,31 @@ def tweet(request):
 			return redirect('tweet')
 	return render_to_response('tweet.html', {
 		'form': form,
+		'users': users,
+		'puser': puser,
 		}, RequestContext(request))
+
+
+def delete_tweet(request,pk):
+	pass
+
+
+def edit_tweet(request, pk):
+	tweet = get_object_or_404(Tweeet, pk=pk)
+	form = TweeetForm(instance=tweet)
+	if request.method =='POST':
+		form = TweeetForm(request.POST, instance=tweet)
+		if form.is_valid():
+			form.save()
+		return redirect('tweet')
+	return render_to_response('edit_tweet.html',{
+		'form': form,
+	}, RequestContext(request))
+
+#	article = get_object_or_404(Article, pk=pk)
+#	return render_to_response('show_article.html', {
+#		'article': article,
+#	})
 
 
 def edit(request):
@@ -62,40 +88,21 @@ def edit(request):
 		form = EditForm(request.POST,instance=profile)
 		if form.is_valid():
 			form.save()						
-			#form2 = form.save(commit = False)
-			#form2.birthday = form3.birthday
-			#form2.author = profile.author
-			#subform = get_object_or_404(form3.birthday, author=request.user)
-			#form2.birthday = form3.birthday		
-			#subform = get_object_or_404(form3.location, author=request.user)
-			#form2.location = form3.location
-			#subform = get_object_or_404(form3.bio, author=request.user)
-			#form2.bio = form3.bio
-			#if form2.is_valid():
-			#	form2.save()
 		return redirect('tweet')
 	return render_to_response('edit.html',{
 		'form': form,
 	}, RequestContext(request))
 
 
+def follows(request,pk):
+	pass	
 
-#def edit_article(request, pk):
-#	article = get_object_or_404(Article, pk=pk)
-#	form = ArticleForm(instance=article)
-#	if request.method =='POST':
-#		form = ArticleForm(request.POST, instance=article)
-#		if form.is_valid():
-#			form.save()
-#		return redirect('home')
-#	return render_to_response('add_article.html',{
-#		'form': form,
-#	}, RequestContext(request))
+#<a href = "{% url follows user.id %}">Follow/Stop Follow</a> </div>
+	#profile = get_object_or_404(UserProfile, author=request.user)
+	#form = UserProfileForm(instance=profile)
+	#user = get_object_or_404(UserProfile, pk=pk)
+	#for follower in form.followers.all:
+	#	if user = follower:	
+	#	else :
+	#redirect('tweet')
 
-#def show_article(request, pk):
-#	article = get_object_or_404(Article, pk=pk)
-#	return render_to_response('show_article.html', {
-#		'article': article,
-#	})
-
-	
