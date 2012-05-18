@@ -5,19 +5,19 @@
     <script type="text/javascript" src="{{ STATIC_URL }}main.js"></script>
     <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}main.css">
 </head>
-<body>
+<body align="center">
 	<div>
 		<h1>Profile</h1>
 	<div>	
 	</div>
-	<div>
+	<abc>
 		<form method="POST">
 			{% csrf_token %}
 			{{ form.as_p }}
 			<input type="submit" value="Acept">
 			
 		</form>
-	</div>
+	</abc>
 </body>
 
 </html>

@@ -5,12 +5,15 @@
     <script type="text/javascript" src="{{ STATIC_URL }}main.js"></script>
     <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}main.css">
 </head>
-<body>
-	<form method="POST">
-		{% csrf_token %}
-		{{ form.as_p }}
-		<input type="submit"/>
-	</form>
+<body align="center">
+	<h2>Editar Tweet</h2>
+	<abc>
+		<form method="POST">
+			{% csrf_token %}
+			{{ form.as_p }}
+			<input type="submit"/>
+		</form>
+	</abc>
 </body>
 
 </html>
